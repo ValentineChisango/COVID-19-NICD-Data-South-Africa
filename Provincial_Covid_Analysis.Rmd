@@ -1,0 +1,188 @@
+---
+title: "Provincial Covid Analysis"
+author: "Valentine Chisango"
+date: "5/25/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#Opening libraries
+```{r echo=FALSE}
+library(rJava)
+library(tabulizer)
+library(dplyr)
+```
+
+#Week 18 - 3 May 2020
+```{r}
+#Week 18 - 3 May 2020
+# Location of NICD brief pdf file
+location18 <- 'https://www.nicd.ac.za/wp-content/uploads/2020/05/Week-18-Weekly-Epidemiology-Brief-Template-V8.pdf'
+
+# Extract the tables
+week_18all <- extract_tables(location18)
+headers <- c("Province","Cases (n)","Proportion (n/total)","95% confidence interval for proportion","Population in mid-2019 (n)", "Incidence risk (cases per 100 000 persons)","95% confidence interval for incidence risk","Tests per 100 000 persons")
+week18Table1 <- c()
+weekrows <- cbind(week_18all[[5]][46:55])
+  
+for (i in 1:10){
+  tempRow <-cbind(strsplit(weekrows[i]," "))
+  tempRow <- unlist(tempRow)
+  
+  if (length(tempRow)==11){
+    tempRow[1] <- paste(tempRow[1],tempRow[2], sep = " ")
+    tempRow <- tempRow[-2]
+    tempRow[5] <- paste(tempRow[5],tempRow[6],tempRow[7], sep = "")
+    tempRow <- tempRow[-6]
+    tempRow <- tempRow[-6]
+  }else{
+    if(i==10){
+    tempRow[1] <- paste(tempRow[1],tempRow[2], sep = " ")
+    tempRow <- tempRow[-2]
+    tempRow[5] <- paste(tempRow[4],tempRow[5],tempRow[6], sep = "")
+    tempRow[4] <-""
+    tempRow <- tempRow[-6]
+    
+    }else{
+      tempRow[5] <- paste(tempRow[5],tempRow[6],tempRow[7], sep = "")
+      tempRow <- tempRow[-6]
+      tempRow <- tempRow[-6]
+      }
+  }
+  
+
+  nextRow <-c()
+  for (j in 1:8){
+    nextRow <-cbind(nextRow,tempRow[j])
+  }
+
+  week18Table1 <-rbind(week18Table1,nextRow)
+}
+week18Table1 <-as.data.frame(week18Table1)
+names(week18Table1) <- headers
+week18Table1[,2] <-as.numeric(week18Table1[,2])
+week18Table1[,3] <-as.numeric(week18Table1[,3])
+week18Table1[,5] <-as.numeric(week18Table1[,5])
+week18Table1[,6] <-as.numeric(week18Table1[,6])
+week18Table1[,8] <-as.numeric(week18Table1[,8])
+```
+
+#Week 19 - 9 May 2020
+```{r}
+#Week 19 - 9 May 2020
+# Location of NICD brief pdf file
+location19 <- 'https://www.nicd.ac.za/wp-content/uploads/2020/05/NICD-Weekly-Epidemiological-Brief_-Week-ending-09-May-2020-002-00000002-1.pdf'
+
+# Extract the tables
+week_19all <- extract_tables(location19)
+headers <- c("Province","Cases (n)","Proportion (n/total)","95% confidence interval for proportion","Population in mid-2019 (n)", "Incidence risk (cases per 100 000 persons)","95% confidence interval for incidence risk","Tests per 100 000 persons")
+week19Table1 <- c()
+weekrows <- paste(week_19all[[5]][32:41],week_19all[[5]][32:41,2])
+  
+for (i in 1:10){
+  tempRow <-cbind(strsplit(weekrows[i]," "))
+  tempRow <- unlist(tempRow)
+  
+  if (length(tempRow)==11){
+    tempRow[1] <- paste(tempRow[1],tempRow[2], sep = " ")
+    tempRow <- tempRow[-2]
+    tempRow[5] <- paste(tempRow[5],tempRow[6],tempRow[7], sep = "")
+    tempRow <- tempRow[-6]
+    tempRow <- tempRow[-6]
+  }else{
+    if(i==10){
+    tempRow[1] <- paste(tempRow[1],tempRow[2], sep = " ")
+    tempRow <- tempRow[-2]
+    tempRow[5] <- paste(tempRow[4],tempRow[5],tempRow[6], sep = "")
+    tempRow[4] <-""
+    tempRow <- tempRow[-6]
+    
+    }else{
+      tempRow[5] <- paste(tempRow[5],tempRow[6],tempRow[7], sep = "")
+      tempRow <- tempRow[-6]
+      tempRow <- tempRow[-6]
+      }
+  }
+  
+
+  nextRow <-c()
+  for (j in 1:8){
+    nextRow <-cbind(nextRow,tempRow[j])
+  }
+
+  week19Table1 <-rbind(week19Table1,nextRow)
+}
+week19Table1 <-as.data.frame(week19Table1)
+names(week19Table1) <- headers
+week19Table1[,3] <-substr(week19Table1[,3],0,4)
+week19Table1[,2] <-as.numeric(week19Table1[,2])
+week19Table1[,3] <-as.numeric(week19Table1[,3])
+week19Table1[,5] <-as.numeric(week19Table1[,5])
+week19Table1[,6] <-as.numeric(week19Table1[,6])
+week19Table1[,8] <-as.numeric(week19Table1[,8])
+```
+
+#Week 20 - 16 May 2020
+```{r}
+#Week 20 - 16 May 2020
+# Location of NICD brief pdf file
+location20 <- 'https://www.nicd.ac.za/wp-content/uploads/2020/05/NICD-Weekly-Epidemiological-Brief_-Week-ending-16-May-2020-003.pdf'
+
+# Extract the tables
+week_20all <- extract_tables(location20)
+headers <- c("Province","Cases (n)","Proportion (n/total)","95% confidence interval for proportion","Population in mid-2019 (n)", "Incidence risk (cases per 100 000 persons)","95% confidence interval for incidence risk","Tests per 100 000 persons")
+week20Table1 <- c()
+weekrows <- paste(week_20all[[6]][29:38],week_20all[[6]][29:38,2],week_20all[[6]][29:38,3])
+  
+for (i in 1:10){
+  tempRow <-cbind(strsplit(weekrows[i]," "))
+  tempRow <- unlist(tempRow)
+  
+  if (length(tempRow)==11){
+    tempRow[1] <- paste(tempRow[1],tempRow[2], sep = " ")
+    tempRow <- tempRow[-2]
+    tempRow[5] <- paste(tempRow[5],tempRow[6],tempRow[7], sep = "")
+    tempRow <- tempRow[-6]
+    tempRow <- tempRow[-6]
+  }else{
+    if(i==10){
+    tempRow[1] <- paste(tempRow[1],tempRow[2], sep = " ")
+    tempRow <- tempRow[-2]
+    tempRow[5] <- paste(tempRow[4],tempRow[5],tempRow[6], sep = "")
+    tempRow[4] <-""
+    tempRow <- tempRow[-6]
+    
+    }else{
+      tempRow[5] <- paste(tempRow[5],tempRow[6],tempRow[7], sep = "")
+      tempRow <- tempRow[-6]
+      tempRow <- tempRow[-6]
+      }
+  }
+  
+
+  nextRow <-c()
+  for (j in 1:8){
+    nextRow <-cbind(nextRow,tempRow[j])
+  }
+
+  week20Table1 <-rbind(week20Table1,nextRow)
+}
+week20Table1 <-as.data.frame(week20Table1)
+names(week20Table1) <- headers
+week20Table1[,2] <-as.numeric(week20Table1[,2])
+week20Table1[,3] <-as.numeric(week20Table1[,3])
+week20Table1[,5] <-as.numeric(week20Table1[,5])
+week20Table1[,6] <-as.numeric(week20Table1[,6])
+week20Table1[,8] <-as.numeric(week20Table1[,8])
+```
+
+#Creating the csv files
+```{r}
+write.csv(week18Table1, file = "NICD_Week_18_Epidemiology_Brief.csv", row.names = FALSE)
+write.csv(week19Table1, file = "NICD_Week_19_Epidemiology_Brief.csv", row.names = FALSE)
+write.csv(week20Table1, file = "NICD_Week_20_Epidemiology_Brief.csv", row.names = FALSE)
+```
+
